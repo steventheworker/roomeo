@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -11,7 +11,8 @@ import DrawerRoutes from "./components/drawer";
 import { StatusBar } from "expo-status-bar";
 import CustomHeader from "./components/header/CustomHeader";
 
-import { ThemeProvider } from "./ThemeContext";
+import { ThemeProvider } from "./components/ThemeContext";
+import { Animated } from "react-native";
 
 export default function App() {
   return (
@@ -47,6 +48,9 @@ export default function App() {
 declare global {
   interface Event {
     message: string;
+  }
+  interface Props {
+    children: ReactNode;
   }
 }
 const ws = new WebSocket("ws://192.168.0.204:8000/sockets/websocket");

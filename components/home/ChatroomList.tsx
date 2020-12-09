@@ -1,33 +1,46 @@
 import React from "react";
 import styled from "styled-components/native";
-import { TouchableOpacity, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { Room, RoomsList, RoomProps } from "../../screens/Room";
+import { useTheme, useThemeUpdate } from "../ThemeContext";
+import { DrawerProps } from "../../types";
 
-import { useTheme, useThemeUpdate } from "../../ThemeContext";
 const RoomStyling = styled.TouchableOpacity`
   background: #e6e6e6;
   border: 16px solid white;
   padding: 5px;
   margin: 5px;
 `;
-function RoomListing(props: { title: string }) {
-  const toggle2 = useThemeUpdate();
-  const val = useTheme();
-  function pressHandler() {
-    toggle2();
-    console.log(val);
+function RoomListing({ room, navigation, route }: RoomProps) {
+  const state = useTheme();
+  const setState = useThemeUpdate();
+  function AddRoom(roomid: string) {
+    const rooms = state.rooms;
+    const res = rooms.filter((r) => r.roomid === roomid);
+    res.length ? null : rooms.push(new Room(RoomsList[roomid]));
+    setState({ ...state, rooms, room: roomid });
+    navigation.navigate("Room", { roomid });
   }
   return (
-    <RoomStyling onPress={pressHandler}>
-      <Text style={{ fontSize: 33, color: "#a6a6a6" }}>{props.title}</Text>
+    <RoomStyling
+      onPress={() => {
+        AddRoom(room.roomid);
+      }}
+    >
+      <Text style={{ fontSize: 33, color: "#a6a6a6" }}>{room.title}</Text>
     </RoomStyling>
   );
 }
-export default function ChatRoomList() {
-  const Rooms = ["main", "two", "3"];
+export default function ChatRoomList({ navigation, route }: DrawerProps) {
   return (
     <View>
-      {Rooms.map((r, i) => (
-        <RoomListing key={i} title={r} />
+      {Object.keys(RoomsList).map((roomKey, i) => (
+        <RoomListing
+          route={route}
+          navigation={navigation}
+          key={i}
+          room={RoomsList[roomKey]}
+        />
       ))}
     </View>
   );

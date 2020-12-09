@@ -1,19 +1,22 @@
-import React from 'react';
-import styled from 'styled-components/native';
-import Body from '../components/home/Body';
-import {px} from '../fn';
+import React from "react";
+import styled from "styled-components/native";
+import { Text, Button } from "react-native";
+import { px } from "../fn";
+import { DrawerProps } from "../types";
+import ChatRoomList from "../components/home/ChatroomList";
 
 const BodyContainer = styled.View`
-    position: absolute;
-    top: ${px(0)};
-    height: 100%;
-    width: 100%;
-    background: black;
+  position: absolute;
+  top: ${px(0)};
+  height: 100%;
+  width: 100%;
+  background: black;
 `;
-export default function Home() {
+export default function Home({ navigation, route }: DrawerProps) {
   return (
-      <BodyContainer>
-          <Body />
-      </BodyContainer>
+    <BodyContainer>
+      <Text style={{ color: "white", fontSize: 44 }}>Rooms:</Text>
+      <ChatRoomList navigation={navigation} route={route} />
+    </BodyContainer>
   );
 }
