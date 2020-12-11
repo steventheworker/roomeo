@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 import { DrawerProps } from "../types";
 
 export type RType = {
@@ -46,8 +46,9 @@ export function RoomComponent({ navigation, route }: DrawerProps) {
   const { roomid } = route.params;
   const room = RoomsList[roomid];
   return (
-    <View>
+    <View style={{ width: "100%", height: "100%" }}>
       <Text style={{ color: "red" }}>{room.title}</Text>
+      <Button title="abc" onPress={() => {}} />
     </View>
   );
 }

@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { navigationRef } from "./RootNavigation";
 
 //routing stuff
 import Splash from "./screens/Splash";
@@ -16,7 +17,7 @@ import { Animated } from "react-native";
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <StatusBar style="dark" />
       <ThemeProvider>
         <Stack.Navigator>
