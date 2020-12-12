@@ -11,12 +11,20 @@ const RoomStyling = styled.TouchableOpacity`
   padding: 5px;
   margin: 5px;
 `;
+const UserCount = styled.Text`
+  position: absolute;
+  bottom: 0;
+  font-size: 20px;
+  right: 0;
+  font-family: Courier;
+  color: silver;
+`;
 function RoomListing({ room, navigation, route }: RoomProps) {
   const state = useTheme();
   const setState = useThemeUpdate();
   function AddRoom(roomid: string) {
     const rooms = state.rooms;
-    const res = rooms.filter((r) => r.roomid === roomid);
+    const res = rooms.filter((r) => r.id === roomid);
     res.length ? null : rooms.push(new Room(RoomsList[roomid]));
     setState({ ...state, rooms, room: roomid });
     navigation.navigate("Room", { roomid });
@@ -24,10 +32,14 @@ function RoomListing({ room, navigation, route }: RoomProps) {
   return (
     <RoomStyling
       onPress={() => {
-        AddRoom(room.roomid);
+        AddRoom(room.id);
       }}
     >
-      <Text style={{ fontSize: 33, color: "#a6a6a6" }}>{room.title}</Text>
+      <UserCount>({room.userCount} users)</UserCount>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={{ fontSize: 33, color: "#a6a6a6" }}>{room.title} - </Text>
+        <Text style={{ fontSize: 12, color: "#a6a6a6" }}>{room.shortDesc}</Text>
+      </View>
     </RoomStyling>
   );
 }

@@ -15,8 +15,13 @@ const BodyContainer = styled.View`
 export default function Home({ navigation, route }: DrawerProps) {
   return (
     <BodyContainer>
-      <Text style={{ color: "white", fontSize: 44 }}>Rooms:</Text>
+      <Text style={{ color: "white", fontSize: 44 }}>
+        Rooms: <Text style={{ fontSize: 12 }}>Mute & Change Name</Text>
+      </Text>
       <ChatRoomList navigation={navigation} route={route} />
+      <Button title="ChatRooms" onPress={() => {}} />
+      <Button title="Friends" onPress={() => {}} />
+      <Button title="Search" onPress={() => {}} />
     </BodyContainer>
   );
 }

@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@expo/webpack-config": "^0.12.51",
     "@types/node-static": "^0.7.5",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",

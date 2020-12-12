@@ -13,7 +13,6 @@ import { StatusBar } from "expo-status-bar";
 import CustomHeader from "./components/header/CustomHeader";
 
 import { ThemeProvider } from "./components/ThemeContext";
-import { Animated } from "react-native";
 
 export default function App() {
   return (
