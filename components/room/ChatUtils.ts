@@ -8,7 +8,7 @@ export class ChatLog {
   }
 }
 export const ChatLogs: ChatLog[] = [
-  new ChatLog("lolg"),
+  new ChatLog("lolggg"),
   new ChatLog("wtf"),
   new ChatLog("2"),
   new ChatLog("lolg"),

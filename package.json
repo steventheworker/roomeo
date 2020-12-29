@@ -1,7 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "serve": "node lib/server.js",
+    "serve": "node dist/lib/server.js",
+    "server": "concurrently \"tsc -w\"  \"cd dist/lib && nodemon server.js\"",
     "tsc": "tsc lib/server.ts",
     "start": "expo start",
     "android": "expo start --android",
@@ -38,7 +39,9 @@
     "@types/react-primitives": "^0.6.2",
     "@types/sockjs": "^0.3.32",
     "@types/styled-components": "^5.1.4",
+    "@types/styled-components-react-native": "^5.1.0",
     "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6",
     "typescript": "~3.9.5"
   },
   "private": true

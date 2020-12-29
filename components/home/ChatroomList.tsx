@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import { Room, RoomsList, RoomProps } from "../../screens/Room";
 import { useTheme, useThemeUpdate } from "../ThemeContext";
 import { DrawerProps } from "../../types";
@@ -54,6 +54,7 @@ export default function ChatRoomList({ navigation, route }: DrawerProps) {
           room={RoomsList[roomKey]}
         />
       ))}
+      <Button title="Create new chatroom" onPress={() => {}} />
     </View>
   );
 }

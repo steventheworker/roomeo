@@ -8,11 +8,11 @@ export function getDimensions() {
   curDimensions.height = d.height;
   return d;
 }
-export function getWidth(a?: true | number) {
+export function getWidth(a?: boolean | number) {
   if (a) return getDimensions().width;
   return curDimensions.width;
 }
-export function getHeight(a?: true | number) {
+export function getHeight(a?: boolean | number) {
   if (a) return getDimensions().height;
   return curDimensions.height;
 }

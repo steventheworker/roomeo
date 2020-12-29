@@ -6,6 +6,7 @@ import { Rel, HR } from "../Library";
 import { useState } from "react";
 import { useRef } from "react";
 import { ChatLogs } from "./ChatUtils";
+import { useCallback } from "react";
 const ChatContainer = styled.View`
   position: absolute;
   top: 0;
@@ -42,7 +43,7 @@ const ChatLogContainer = styled.View`
   margin-bottom: 5px;
 `;
 const ChatLogsContainer = styled.ScrollView`
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 122, 0.5);
   max-height: 100%;
   width: 100%%;
   flex: 1;
@@ -72,15 +73,18 @@ export default function Chat({ roomid }: { roomid: string }) {
   function _keyboardDidHide() {
     setKeyboardHeight("100%");
   }
-  function updateHeight() {
-    const asDiv = ($InputContainer as MutableRefObject<HTMLElement | null>)
-      .current;
-    inputHeight.current = (asDiv && asDiv.offsetHeight) || 0;
-    console.log("InputHeight.current:\t", inputHeight.current);
-    console.log("asDiv.offsetHeight::\t", asDiv && asDiv.offsetHeight);
-  }
+  const onLayout = useCallback(
+    ({
+      nativeEvent: {
+        layout: { width, height },
+      },
+    }) => {
+      console.log(height);
+      inputHeight.current = height;
+    },
+    []
+  );
   useEffect(() => {
-    updateHeight();
     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
     return () => {
@@ -111,6 +115,7 @@ export default function Chat({ roomid }: { roomid: string }) {
           <View
             style={{ position: "relative", width: "100%", height: "100%" }}
             ref={$InputContainer}
+            onLayout={onLayout}
           >
             <HR />
             <Input placeholder={"Message #" + roomid} />

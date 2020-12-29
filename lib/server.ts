@@ -1,46 +1,51 @@
-import * as path from 'path';
-import * as sockjs from 'sockjs';
-import * as http from 'http';
-import * as node_static from 'node-static';
+import * as path from "path";
+import * as sockjs from "sockjs";
+import * as http from "http";
+import * as node_static from "node-static";
+
+import { User, Users } from "./Users";
 
 //set up sockets, todo: make global & set up in ./sockets.ts
 let socketCounter = 0;
-const sockjs_echo = sockjs.createServer({sockjs_url: "./sockjs.min.js"});
-sockjs_echo.on('connection', socket => {
-    if (!socket) return;
-    if (!socket.remoteAddress) {/* SockJS sometimes fails to be able to cache the IP, port, and address from connection request headers. */
-        try {socket.destroy();} catch (e) {}
-        return;
+const sockjs_echo = sockjs.createServer({ sockjs_url: "./sockjs.min.js" });
+sockjs_echo.on("connection", (socket) => {
+  if (!socket) return;
+  if (!socket.remoteAddress) {
+    /* SockJS sometimes fails to be able to
+      cache the IP, port, and address
+      from connection request headers. */
+    try {
+      socket.destroy();
+    } catch (e) {}
+    return;
+  }
+  const socketid = "" + ++socketCounter,
+    ip = socket.remoteAddress;
+  socket.on("data", (message) => {
+    if (!message) return;
+    if (message.length > 100 * 1024) {
+      console.log(`Dropping client message ${message.length / 1024} KB...`);
+      console.log(message.slice(0, 160));
+      return;
     }
-    const socketid = '' + (++socketCounter),
-        ip = socket.remoteAddress;
-    socket.on('data', message => {
-        if (!message) return;
-        if (message.length > (100 * 1024)) {
-            console.log(`Dropping client message ${message.length / 1024} KB...`);
-            console.log(message.slice(0, 160));
-            return;
-        }
-        const pipeIndex = message.indexOf('|');
-        if (pipeIndex < 0/* || pipeIndex === message.length - 1 */) return;
-        parseDatastring(message)
-    });
-    socket.once('close', () => {
-        console.log('... exit ...')
-    });
+    const pipeIndex = message.indexOf("|");
+    if (pipeIndex < 0 /* || pipeIndex === message.length - 1 */) return;
+    parseDatastring(message);
+  });
+  socket.once("close", () => {
+    console.log("... exit ...");
+  });
 });
-function parseDatastring(message: string) {
-    
-}
+function parseDatastring(message: string) {}
 
-const static_directory = new node_static.Server(path.join(__dirname, './'));
+const static_directory = new node_static.Server(path.join(__dirname, "./"));
 const server = http.createServer();
-server.addListener('request', function(req, res) {
-    static_directory.serve(req, res);
+server.addListener("request", function (req, res) {
+  static_directory.serve(req, res);
 });
-server.addListener('upgrade', function(req,res){
-    res.end();
+server.addListener("upgrade", function (req, res) {
+  res.end();
 });
-sockjs_echo.installHandlers(server, {prefix:'/sockets'});
-console.log(' [*] Listening on 0.0.0.0:8000' );
-server.listen(8000, '0.0.0.0');
+sockjs_echo.installHandlers(server, { prefix: "/sockets" });
+console.log(" [*] Listening on 0.0.0.0:8000");
+server.listen(8000, "0.0.0.0");

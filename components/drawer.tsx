@@ -4,6 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useTheme } from "./ThemeContext";
 import Home from "../screens/Home";
 import { RoomComponent } from "../screens/Room";
+import FindBattle from "../screens/FindBattle";
 
 import { View, PanResponder } from "react-native";
 import { TS, TM, TE } from "../TouchHandlers";
@@ -37,7 +38,7 @@ export default function DrawerRoutes() {
       >
         <Drawer.Screen name="Home" component={Home} />
         <Drawer.Screen name="Direct Messages" component={blank} />
-        <Drawer.Screen name="Find Battle" component={blank} />
+        <Drawer.Screen name="Find Battle" component={FindBattle} />
         {!state.rooms.length
           ? null
           : state.rooms.map((r, i) => (

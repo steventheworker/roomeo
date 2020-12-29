@@ -2,7 +2,7 @@ import React from "react";
 import { DrawerProps } from "../types";
 import styled from "styled-components/native";
 import Chat from "../components/room/Chat";
-import { px, getHeight, statusBarHeight } from "../fn";
+import { px, getHeight, statusBarHeight, isMobile } from "../fn";
 import { Rel } from "../components/Library";
 
 export type RType = {
@@ -57,8 +57,9 @@ const RoomTitle = styled.Text`
   text-shadow-color: green;
   color: black;
   font-weight: bold;
-  text-align: right;
   font-size: 33px;
+  position: absolute;
+  right: ${isMobile ? 0 : 18}px;
 `;
 export function RoomComponent({ navigation, route }: DrawerProps) {
   console.log(route.params);

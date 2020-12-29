@@ -12,3 +12,6 @@ type DrawerParamList = {
 };
 export type StackProps = StackScreenProps<RootStackParamList, "Login">;
 export type DrawerProps = DrawerScreenProps<DrawerParamList, "Room">;
+export type RDrawerProps = DrawerScreenProps<DrawerParamList, "Room"> & {
+  random: boolean;
+};
